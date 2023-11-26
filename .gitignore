@@ -1,23 +1,19 @@
-import tkinter as Tk
+import tkinter as tk
 from tkinter import *
 import random
 
+
 class level_02:
-    Boom=Tk()
-    Boom.title( '  Speed Typing Game <-- Level 02 --> ')
-    Boom.iconbitmap('icon2.ico')
+    Boom = Tk()
+    Boom.title('  Speed Typing Game <-- Level 02 --> ')
+    Boom.iconbitmap('icon.ico')
     Boom.geometry('900x600+250+50')
     Boom.config(bg='turquoise3')
-    Boom.resizable(0,0)
-    logoImage=PhotoImage(file='clock.png')
-    LogoLabel=Label(Boom, image=logoImage,bg='turquoise3')
+    Boom.resizable(0, 0)
+    logoImage = PhotoImage(file='clock1.png')
+    LogoLabel = Label(Boom, image=logoImage, bg='turquoise3')
     LogoLabel.place(x=325, y=70)
-    
-    
-    
-    
-    
-    
-    
-    
+    funLabel=Label(Boom, text='Welcome To Level-02 Of Speed Typing Game', bg='turquoise3',font=('arial',20,'bold italic'),width=52,fg='pink4')
+    funLabel.place(x=0, y=10)
+
     Boom.mainloop()
