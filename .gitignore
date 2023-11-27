@@ -1,19 +1,35 @@
-import tkinter as tk
 from tkinter import *
-import random
 
+class Level02:
+    sliderwords = ''
+    count = 0
 
-class level_02:
-    Boom = Tk()
-    Boom.title('  Speed Typing Game <-- Level 02 --> ')
-    Boom.iconbitmap('icon.ico')
-    Boom.geometry('900x600+250+50')
-    Boom.config(bg='turquoise3')
-    Boom.resizable(0, 0)
-    logoImage = PhotoImage(file='clock1.png')
-    LogoLabel = Label(Boom, image=logoImage, bg='turquoise3')
-    LogoLabel.place(x=325, y=70)
-    funLabel=Label(Boom, text='Welcome To Level-02 Of Speed Typing Game', bg='turquoise3',font=('arial',20,'bold italic'),width=52,fg='pink4')
-    funLabel.place(x=0, y=10)
+    def __init__(self):
+        self.boom = Tk()
+        self.fontlabel = Label(self.boom, text="", font=('arial', 25, 'italic bold'), bg='turquoise3', fg='red3', width=35)
+        self.fontlabel.place(x=0, y=10)
 
-    Boom.mainloop()
+        self.boom.geometry('700x600+250+30')
+        self.boom.configure(bg='turquoise3')
+        self.boom.title("Speed Typing Game <-- Level 02 -->")
+        self.boom.iconbitmap('icon2.ico')
+
+        clock = PhotoImage(file='clock.png')
+        clocklabel = Label(self.boom, image=clock, bg='turquoise3')
+        clocklabel.place(x=220, y=50)
+
+        self.labelSlider()
+
+        self.boom.mainloop()
+
+    def labelSlider(self):
+        text = 'Congratulation!, And Welcome To Level_02'
+
+        if Level02.count < len(text):
+            Level02.sliderwords += text[Level02.count]
+            Level02.count += 1
+            self.fontlabel.config(text=Level02.sliderwords)
+            self.boom.after(250, self.labelSlider)
+
+if __name__ == "__main__":
+    level = Level02()
