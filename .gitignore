@@ -30,6 +30,4 @@ class Level02:
             Level02.count += 1
             self.fontlabel.config(text=Level02.sliderwords)
             self.boom.after(250, self.labelSlider)
-
-if __name__ == "__main__":
-    level = Level02()
+Level02()
