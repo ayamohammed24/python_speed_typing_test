@@ -1,4 +1,5 @@
 from tkinter import *
+import random
 
 class Level02:
     sliderwords = ''
@@ -6,28 +7,131 @@ class Level02:
 
     def __init__(self):
         self.boom = Tk()
-        self.fontlabel = Label(self.boom, text="", font=('arial', 25, 'italic bold'), bg='turquoise3', fg='red3', width=35)
-        self.fontlabel.place(x=0, y=10)
+        self.fontlabel = Label(self.boom, text="", font=('arial', 20, 'italic bold'), bg='turquoise3', fg='red3', width=35)
+        self.fontlabel.place(x=50, y=10)
 
         self.boom.geometry('700x600+250+30')
         self.boom.configure(bg='turquoise3')
         self.boom.title("Speed Typing Game <-- Level 02 -->")
         self.boom.iconbitmap('icon2.ico')
+        self.boom.resizable(0,0)
+        clockpic = PhotoImage(file='clock.png')
+        piclabel = Label(self.boom, image=clockpic, bg='turquoise3')
+        piclabel.place(x=230, y=60)
 
-        clock = PhotoImage(file='clock.png')
-        clocklabel = Label(self.boom, image=clock, bg='turquoise3')
-        clocklabel.place(x=220, y=50)
+        self.sentences = [
+            ' A function is a block of reusable code',
+            'A variable is a reserved memory location',
+            'Lists are used to store multiple items in a single variable',
+            'Python strings can be multiplied by an integer',
+            'Programming is a basic skill for all engineers',
+            'The def statement is used to define functions and methods',
+            'The return statement is used to return values from a function',
+            'True and False are the boolean values',
+            'The break statement exits from a loop',
+            'Lists are slower but are more powerful than tuples',
+        ]
+
+        self.score = 0
+        self.miss = 0
+        self.i = 0
+        self.timeleft = 60
 
         self.labelSlider()
 
+        self.wordlabel = Label(self.boom, text='', font=('cooper black', 18, 'italic bold'), bg='turquoise3')
+        self.wordlabel.place(x=350, y=350, anchor=CENTER)
+
+        self.scorelabel = Label(self.boom, text='Sentences', font=('castellar', 28, 'bold'), bg='turquoise3')
+        self.scorelabel.place(x=30, y=100)
+
+        self.scorelabelcount = Label(self.boom, text=self.i, font=('castellar', 28, 'italic bold'), bg='turquoise3')
+        self.scorelabelcount.place(x=80, y=180)
+
+        self.timelabel = Label(self.boom, text='Timer', font=('castellar', 28, 'bold'), bg='turquoise3')
+        self.timelabel.place(x=510, y=100)
+
+        self.timelabelcount = Label(self.boom, text=self.timeleft, font=('castellar', 28, 'italic bold'), bg='turquoise3')
+        self.timelabelcount.place(x=550, y=180)
+
+        self.gameplay_detaillabel = Label(self.boom, text='Type Sentence And Hit Enter to Start', font=('chiller', 20, 'italic bold'),
+                                          bg='turquoise3', fg='red3')
+        self.gameplay_detaillabel.place(x=350, y=510, anchor=CENTER)
+
+        self.wordEntry = Entry(self.boom, font=('arial', 30), bd='10', justify=CENTER)
+        self.wordEntry.place(x=350, y=410, anchor=CENTER)
+        self.wordEntry.focus_set()
+
+        self.badpic = PhotoImage(file='bad.png')
+        self.goodpic = PhotoImage(file='good.png')
+        self.propic = PhotoImage(file='pro.png')
+
+        self.wowLabel = Label(self.boom, bg='turquoise3')
+        self.wowLabel.place(x=80, y=490)
+
+        self.wow1Label = Label(self.boom, bg='turquoise3')
+        self.wow1Label.place(x=540, y=490)
+
+        self.root_bind()
+        self.start_game()
+        self.boom.protocol("closing", self.on_closing)  # Handle window close event#
         self.boom.mainloop()
 
-    def labelSlider(self):
-        text = 'Congratulation!, And Welcome To Level_02'
+    def start_game(self):
+        random.shuffle(self.sentences)
+        self.wordlabel.config(text=self.sentences[0])
 
+    def labelSlider(self):
+        text = 'Congratulations!, And Welcome To Level_02'
         if Level02.count < len(text):
             Level02.sliderwords += text[Level02.count]
             Level02.count += 1
             self.fontlabel.config(text=Level02.sliderwords)
             self.boom.after(250, self.labelSlider)
+
+    def game_timer(self):
+        if self.timeleft < 11:
+            self.timelabelcount.config(fg='red')
+        if self.timeleft > 0:
+            self.timeleft -= 1
+            self.timelabelcount.config(text=self.timeleft)
+            self.timelabelcount.after(1000, self.game_timer)
+        else:
+            self.wordEntry.config(state=DISABLED)
+            result = self.score - self.miss
+            self.gameplay_detaillabel.config(text=f'Correct Sentences= {self.score} \nWrong Sentences= {self.miss}\nFinal Score= {result}')
+            if result < 5:
+                self.wowLabel.config(image=self.badpic)
+                self.wow1Label.config(image=self.badpic)
+            elif result >= 5:
+                self.wowLabel.config(image=self.goodpic)
+                self.wow1Label.config(image=self.goodpic)
+            elif result >= 8:
+                self.wowLabel.config(image=self.propic)
+                self.wow1Label.config(image=self.propic)
+
+    def play_game(self, event):
+        user_input = self.wordEntry.get().strip()  # Remove leading and trailing spaces
+        if user_input:  # Check if user input is not empty
+            self.i += 1
+            self.scorelabelcount.config(text=self.i)
+            if self.timeleft == 60:
+                self.game_timer()
+            self.gameplay_detaillabel.config(text='')
+            correct_sentence = self.wordlabel['text']
+            if user_input.lower() == correct_sentence.lower():
+                self.score += 1
+            else:
+                self.miss += 1
+            random.shuffle(self.sentences)
+            self.wordlabel.config(text=self.sentences[0])
+            self.wordEntry.delete(0, END)
+
+    def root_bind(self):
+        self.boom.bind('<Return>', self.play_game)
+
+    def on_closing(self):
+        self.boom.destroy()
+
+
 Level02()
