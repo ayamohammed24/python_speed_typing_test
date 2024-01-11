@@ -1,23 +1,22 @@
 from tkinter import *
 import random
-
 class Level02:
     sliderwords = ''
     count = 0
 
     def __init__(self):
         self.gui = Tk()  # Change the variable name from boom to gui
-        self.fontlabel = Label(self.gui, text="", font=('arial', 20, 'italic bold'), bg='turquoise3', fg='red3', width=35)
-        self.fontlabel.place(x=50, y=10)
+        self.fontlabel = Label(self.gui, text="", font=('comic sans ms', 25, ' bold'), bg='royalblue3', fg='white', width=35)
+        self.fontlabel.place(x=90, y=30)
 
-        self.gui.geometry('700x600+250+30')
-        self.gui.configure(bg='turquoise3')
+        self.gui.geometry('900x600+250+30')
+        self.gui.configure(bg='royalblue3')
         self.gui.title("Speed Typing Game <-- Level 02 -->")
         self.gui.iconbitmap('icon2.ico')
         self.gui.resizable(0, 0)
         clockpic = PhotoImage(file='clock.png')
-        piclabel = Label(self.gui, image=clockpic, bg='turquoise3')
-        piclabel.place(x=230, y=60)
+        piclabel = Label(self.gui, image=clockpic, bg='royalblue3')
+        piclabel.place(x=320, y=80)
 
         self.sentences = [
             ' A function is a block of reusable code',
@@ -39,38 +38,37 @@ class Level02:
 
         self.labelSlider()
 
-        self.wordlabel = Label(self.gui, text='', font=('cooper black', 18, 'italic bold'), bg='turquoise3')
-        self.wordlabel.place(x=350, y=350, anchor=CENTER)
+        self.wordlabel = Label(self.gui, text='', font=('black copper', 20, ' bold'), bg='royalblue3',fg= 'white')
+        self.wordlabel.place(x=440, y=370, anchor=CENTER)
 
-        self.scorelabel = Label(self.gui, text='Sentences', font=('castellar', 28, 'bold'), bg='turquoise3')
-        self.scorelabel.place(x=30, y=100)
+        self.scorelabel = Label(self.gui, text='Sentences', font=('castellar', 28, 'bold'), bg='royalblue3',fg= 'white')
+        self.scorelabel.place(x=45, y=150)
 
-        self.scorelabelcount = Label(self.gui, text=self.i, font=('castellar', 28, 'italic bold'), bg='turquoise3')
-        self.scorelabelcount.place(x=80, y=180)
+        self.scorelabelcount = Label(self.gui, text=self.i, font=('castellar', 28, ' bold'), bg='royalblue3',fg= 'white')
+        self.scorelabelcount.place(x=90, y=220)
 
-        self.timelabel = Label(self.gui, text='Timer', font=('castellar', 28, 'bold'), bg='turquoise3')
-        self.timelabel.place(x=510, y=100)
+        self.timelabel = Label(self.gui, text='Timer', font=('castellar', 28, 'bold'), bg='royalblue3',fg= 'white')
+        self.timelabel.place(x=740, y=150)
 
-        self.timelabelcount = Label(self.gui, text=self.timeleft, font=('castellar', 28, 'italic bold'), bg='turquoise3')
-        self.timelabelcount.place(x=550, y=180)
+        self.timelabelcount = Label(self.gui, text=self.timeleft, font=('castellar', 28, 'italic bold'), bg='royalblue3',fg= 'white')
+        self.timelabelcount.place(x=770, y=220)
 
-        self.gameplay_detaillabel = Label(self.gui, text='Type Sentence And Hit Enter to Start', font=('chiller', 20, 'italic bold'),
-                                          bg='turquoise3', fg='red3')
-        self.gameplay_detaillabel.place(x=350, y=510, anchor=CENTER)
+        self.gameplay_detaillabel = Label(self.gui, text='Type Sentence And Hit Enter to Start', font=('chiller', 20, ' bold'),  bg='royalblue3',fg= 'white')
+        self.gameplay_detaillabel.place(x=445, y=530, anchor=CENTER)
 
         self.wordEntry = Entry(self.gui, font=('arial', 30), bd='10', justify=CENTER)
-        self.wordEntry.place(x=350, y=410, anchor=CENTER)
+        self.wordEntry.place(x=440, y=440, anchor=CENTER)
         self.wordEntry.focus_set()
 
         self.badpic = PhotoImage(file='bad.png')
         self.goodpic = PhotoImage(file='good.png')
         self.propic = PhotoImage(file='pro.png')
 
-        self.wowLabel = Label(self.gui, bg='turquoise3')
-        self.wowLabel.place(x=80, y=490)
+        self.wowLabel = Label(self.gui, bg='royalblue3')
+        self.wowLabel.place(x=90, y=480)
 
-        self.wow1Label = Label(self.gui, bg='turquoise3')
-        self.wow1Label.place(x=540, y=490)
+        self.wow1Label = Label(self.gui, bg='royalblue3')
+        self.wow1Label.place(x=740, y=480)
 
         self.gui.bind('<Return>', self.play_game)  # Binding 'Enter' key to play_game function
         self.gui.protocol("closing", self.gui.destroy)  # Handle window close event#
@@ -129,3 +127,8 @@ class Level02:
 
 
 Level02()
+
+
+
+
+
