@@ -6,17 +6,17 @@ class Level02:
     count = 0
 
     def __init__(self):
-        self.boom = Tk()
-        self.fontlabel = Label(self.boom, text="", font=('arial', 20, 'italic bold'), bg='turquoise3', fg='red3', width=35)
+        self.gui = Tk()  # Change the variable name from boom to gui
+        self.fontlabel = Label(self.gui, text="", font=('arial', 20, 'italic bold'), bg='turquoise3', fg='red3', width=35)
         self.fontlabel.place(x=50, y=10)
 
-        self.boom.geometry('700x600+250+30')
-        self.boom.configure(bg='turquoise3')
-        self.boom.title("Speed Typing Game <-- Level 02 -->")
-        self.boom.iconbitmap('icon2.ico')
-        self.boom.resizable(0,0)
+        self.gui.geometry('700x600+250+30')
+        self.gui.configure(bg='turquoise3')
+        self.gui.title("Speed Typing Game <-- Level 02 -->")
+        self.gui.iconbitmap('icon2.ico')
+        self.gui.resizable(0, 0)
         clockpic = PhotoImage(file='clock.png')
-        piclabel = Label(self.boom, image=clockpic, bg='turquoise3')
+        piclabel = Label(self.gui, image=clockpic, bg='turquoise3')
         piclabel.place(x=230, y=60)
 
         self.sentences = [
@@ -39,26 +39,26 @@ class Level02:
 
         self.labelSlider()
 
-        self.wordlabel = Label(self.boom, text='', font=('cooper black', 18, 'italic bold'), bg='turquoise3')
+        self.wordlabel = Label(self.gui, text='', font=('cooper black', 18, 'italic bold'), bg='turquoise3')
         self.wordlabel.place(x=350, y=350, anchor=CENTER)
 
-        self.scorelabel = Label(self.boom, text='Sentences', font=('castellar', 28, 'bold'), bg='turquoise3')
+        self.scorelabel = Label(self.gui, text='Sentences', font=('castellar', 28, 'bold'), bg='turquoise3')
         self.scorelabel.place(x=30, y=100)
 
-        self.scorelabelcount = Label(self.boom, text=self.i, font=('castellar', 28, 'italic bold'), bg='turquoise3')
+        self.scorelabelcount = Label(self.gui, text=self.i, font=('castellar', 28, 'italic bold'), bg='turquoise3')
         self.scorelabelcount.place(x=80, y=180)
 
-        self.timelabel = Label(self.boom, text='Timer', font=('castellar', 28, 'bold'), bg='turquoise3')
+        self.timelabel = Label(self.gui, text='Timer', font=('castellar', 28, 'bold'), bg='turquoise3')
         self.timelabel.place(x=510, y=100)
 
-        self.timelabelcount = Label(self.boom, text=self.timeleft, font=('castellar', 28, 'italic bold'), bg='turquoise3')
+        self.timelabelcount = Label(self.gui, text=self.timeleft, font=('castellar', 28, 'italic bold'), bg='turquoise3')
         self.timelabelcount.place(x=550, y=180)
 
-        self.gameplay_detaillabel = Label(self.boom, text='Type Sentence And Hit Enter to Start', font=('chiller', 20, 'italic bold'),
+        self.gameplay_detaillabel = Label(self.gui, text='Type Sentence And Hit Enter to Start', font=('chiller', 20, 'italic bold'),
                                           bg='turquoise3', fg='red3')
         self.gameplay_detaillabel.place(x=350, y=510, anchor=CENTER)
 
-        self.wordEntry = Entry(self.boom, font=('arial', 30), bd='10', justify=CENTER)
+        self.wordEntry = Entry(self.gui, font=('arial', 30), bd='10', justify=CENTER)
         self.wordEntry.place(x=350, y=410, anchor=CENTER)
         self.wordEntry.focus_set()
 
@@ -66,16 +66,16 @@ class Level02:
         self.goodpic = PhotoImage(file='good.png')
         self.propic = PhotoImage(file='pro.png')
 
-        self.wowLabel = Label(self.boom, bg='turquoise3')
+        self.wowLabel = Label(self.gui, bg='turquoise3')
         self.wowLabel.place(x=80, y=490)
 
-        self.wow1Label = Label(self.boom, bg='turquoise3')
+        self.wow1Label = Label(self.gui, bg='turquoise3')
         self.wow1Label.place(x=540, y=490)
 
-        self.root_bind()
+        self.gui.bind('<Return>', self.play_game)  # Binding 'Enter' key to play_game function
+        self.gui.protocol("closing", self.gui.destroy)  # Handle window close event#
         self.start_game()
-        self.boom.protocol("closing", self.on_closing)  # Handle window close event#
-        self.boom.mainloop()
+        self.gui.mainloop()
 
     def start_game(self):
         random.shuffle(self.sentences)
@@ -87,7 +87,7 @@ class Level02:
             Level02.sliderwords += text[Level02.count]
             Level02.count += 1
             self.fontlabel.config(text=Level02.sliderwords)
-            self.boom.after(250, self.labelSlider)
+            self.gui.after(250, self.labelSlider)
 
     def game_timer(self):
         if self.timeleft < 11:
@@ -126,12 +126,6 @@ class Level02:
             random.shuffle(self.sentences)
             self.wordlabel.config(text=self.sentences[0])
             self.wordEntry.delete(0, END)
-
-    def root_bind(self):
-        self.boom.bind('<Return>', self.play_game)
-
-    def on_closing(self):
-        self.boom.destroy()
 
 
 Level02()
